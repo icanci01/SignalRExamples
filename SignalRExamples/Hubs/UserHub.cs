@@ -29,6 +29,7 @@ namespace SignalRExamples.Hubs
             await Clients.All.SendAsync("updateTotalViews", TotalViewsSimple);
         }
 
+        /*
         public async Task<string> NewWindowLoadedWithReturn()
         {
             TotalViewsReturn++;
@@ -41,5 +42,6 @@ namespace SignalRExamples.Hubs
             TotalViewsParams = message + " " + TotalViewsSimple;
             await Clients.All.SendAsync("updateTotalViewsWithParams", TotalViewsParams);
         }
+        */
     }
 }
