@@ -33,3 +33,31 @@ function rejected() {
 }
 
 connectionDeathlyHallows.start().then(fulfilled, rejected);
+
+document.getElementById("btnWand").addEventListener("click", function (event) {
+    event.preventDefault();
+    fetch("/Home/DeathlyHallows?type=wand", {
+        method: "GET"
+    }).then();
+});
+
+document.getElementById("btnSword").addEventListener("click", function (event) {
+    event.preventDefault();
+    fetch("/Home/DeathlyHallows?type=sword", {
+        method: "GET"
+    }).then();
+});
+
+document.getElementById("btnStone").addEventListener("click", function (event) {
+    event.preventDefault();
+    fetch("/Home/DeathlyHallows?type=stone", {
+        method: "GET"
+    }).then();
+});
+
+document.getElementById("btnCloak").addEventListener("click", function (event) {
+    event.preventDefault();
+    fetch("/Home/DeathlyHallows?type=cloak", {
+        method: "GET"
+    }).then();
+});
