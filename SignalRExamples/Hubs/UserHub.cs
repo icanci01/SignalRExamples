@@ -43,5 +43,23 @@ namespace SignalRExamples.Hubs
             await Clients.All.SendAsync("updateTotalViewsWithParams", TotalViewsParams);
         }
         */
+
+        /*
+        // All signalR connections
+        await Clients.All.SendAsync("ReceiveMessage", user, message);
+        await Client.Caller.SendAsync("ReceiveMessage", user, message);
+        await Clients.Others.SendAsync("ReceiveMessage", user, message);
+        await Clients.Client("Connection Id - A").SendAsync("ReceiveMessage", user, message);
+        await Clients.Clients("Connection Id - A", "Connection Id - B").SendAsync("ReceiveMessage", user, message);
+        await Clients.AllExcept("Connection Id - A").SendAsync("ReceiveMessage", user, message);
+        await Clients.User("ben@mail.com").SendAsync("ReceiveMessage", user, message);
+        await Clients.Users("ben@mail.com", "alice@mail.com").SendAsync("ReceiveMessage", user, message);
+        await Groups.AddToGroupAsync(Context.ConnectionId, "GroupName");
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, "GroupName");
+        await Clients.Group("admin").SendAsync("ReceiveMessage", user, message);
+        await Clients.OthersInGroup("admin").SendAsync("ReceiveMessage", user, message);
+        await Clients.Groups("admin", "moderator").SendAsync("ReceiveMessage", user, message);
+        await Clients.GroupExcept("admin", "bob@mail.com").SendAsync("ReceiveMessage", user, message);
+        */
     }
 }
