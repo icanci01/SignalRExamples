@@ -18,9 +18,9 @@ btn_sendNotification.addEventListener("click", function (event) {
 // Connect to methods that hub invokes aka receive notifications from hub
 connectionNotifications.on("notificationReceived", function (message, count) {
     let li = document.createElement("li");
-    li.textContent = message;
+    li.textContent = "Notification - " + message;
     notificationsList.appendChild(li);
-    notificationCounter.textContent = "(" + count + ")";
+    notificationCounter.innerHTML = "<span>(" + count + ")</span>";
 });
 
 // Start connection
@@ -29,10 +29,10 @@ function fulfilled() {
     connectionNotifications.on("notificationStatus", (notifications, count) => {
         notifications.forEach(notification => {
             let li = document.createElement("li");
-            li.textContent = notification;
+            li.textContent = "Notification - " + notification;
             notificationsList.appendChild(li);
         });
-        notificationCounter.textContent = "(" + count + ")";
+        notificationCounter.innerHTML = "<span>(" + count + ")</span>";
     });
 }
 
