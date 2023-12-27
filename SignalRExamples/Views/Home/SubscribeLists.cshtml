@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Subscribe And Stay Informed";
+}
+
+<div class="container">
+    <div class="row border p-1 mt-3">
+        <h3>Subscribed List: </h3>
+        <hr/>
+        <div class="row p-2">
+            <div class="col-3">
+                <label style="color:#B52033" id="lbl_listJoined"></label>
+            </div>
+        </div>
+    </div>
+    <div class="row border p-1 mt-3">
+        <h3>Subscribe: </h3>
+        <hr/>
+        <div class="row p-2">
+            <div class="col-3">
+                <button class="btn" style="background-color:#8CFF98" id="btn_newsUpdates">News Updates</button>
+            </div>
+            <div class="col-3">
+                <button class="btn" style="background-color:#EF6461" id="btn_weatherAlerts">Weather Alerts</button>
+            </div>
+            <div class="col-3">
+                <button class="btn" style="background-color:#B4A0E5" id="btn_stockMarket">Stock Market Changes</button>
+            </div>
+            <div class="col-3">
+                <button class="btn" style="background-color:#1D8A99" id="btn_sportScores">Sports Scores</button>
+            </div>
+        </div>
+    </div>
+    <div class="row border p-1 mt-3">
+        <h3>Unsubscribe: </h3>
+        <hr/>
+        <div class="row p-2">
+            <div class="col-3">
+                <button class="btn" style="background-color:#8CFF98; display:none" id="btn_un_newsUpdates">News Updates</button>
+            </div>
+            <div class="col-3">
+                <button class="btn" style="background-color:#EF6461; display:none" id="btn_un_weatherAlerts">Weather Alerts</button>
+            </div>
+            <div class="col-3">
+                <button class="btn" style="background-color:#B4A0E5; display:none" id="btn_un_stockMarket">Stock Market Changes</button>
+            </div>
+            <div class="col-3">
+                <button class="btn" style="background-color:#1D8A99; display:none" id="btn_un_sportScores">Sports Scores</button>
+            </div>
+        </div>
+    </div>
+    <div class="row border p-1 mt-3">
+        <h3>Trigger Notification: </h3>
+        <hr/>
+        <div class="row p-2">
+            <div class="col-3">
+                <button class="btn" style="background-color:#8CFF98" id="trigger_newsUpdates">News Updates</button>
+            </div>
+            <div class="col-3">
+                <button class="btn" style="background-color:#EF6461" id="trigger_weatherAlerts">Weather Alerts</button>
+            </div>
+            <div class="col-3">
+                <button class="btn" style="background-color:#B4A0E5" id="trigger_stockMarket">Stock Market Changes</button>
+            </div>
+            <div class="col-3">
+                <button class="btn" style="background-color:#1D8A99" id="trigger_sportScores">Sports Scores</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/signalr.js"></script>
+<script src="~/js/subscribeLists.js"></script>
