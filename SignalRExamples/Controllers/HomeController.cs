@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using SignalRExamples.Common;
+using SignalRExamples.Data;
 using SignalRExamples.Hubs;
 using SignalRExamples.Models;
 
@@ -9,13 +10,20 @@ namespace SignalRExamples.Controllers;
 
 public class HomeController : Controller
 {
+    private readonly ApplicationDbContext _dbContext;
     private readonly IHubContext<DeathlyHallowsHub> _deathlyHallowsHubContext;
+    private readonly IHubContext<OrderHub> _orderHubContext;
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger, IHubContext<DeathlyHallowsHub> deathlyHallowsHubContext)
+    public HomeController(ILogger<HomeController> logger,
+        IHubContext<DeathlyHallowsHub> deathlyHallowsHubContext,
+        IHubContext<OrderHub> orderHubContext,
+        ApplicationDbContext dbContext)
     {
         _logger = logger;
         _deathlyHallowsHubContext = deathlyHallowsHubContext;
+        _orderHubContext = orderHubContext;
+        _dbContext = dbContext;
     }
 
     public IActionResult Index()
@@ -66,5 +74,48 @@ public class HomeController : Controller
     public IActionResult BasicChat()
     {
         return View();
+    }
+
+    [ActionName("Order")]
+    public async Task<IActionResult> Order()
+    {
+        string[] name = { "Bhrugen", "Ben", "Jess", "Laura", "Ron" };
+        string[] itemName = { "Food1", "Food2", "Food3", "Food4", "Food5" };
+
+        var rand = new Random();
+        // Generate a random index less than the size of the array.
+        var index = rand.Next(name.Length);
+
+        var order = new Order
+        {
+            Name = name[index],
+            ItemName = itemName[index],
+            Count = index
+        };
+
+        return View(order);
+    }
+
+    [ActionName("Order")]
+    [HttpPost]
+    public async Task<IActionResult> OrderPost(Order order)
+    {
+        _dbContext.Orders.Add(order);
+        _dbContext.SaveChanges();
+        await _orderHubContext.Clients.All.SendAsync("newOrderPlaced");
+        return RedirectToAction(nameof(Order));
+    }
+
+    [ActionName("OrderList")]
+    public async Task<IActionResult> OrderList()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult GetAllOrder()
+    {
+        var productList = _dbContext.Orders.ToList();
+        return Json(new { data = productList });
     }
 }

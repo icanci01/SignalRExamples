@@ -38,9 +38,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    "default",
-    "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 // SignalR Hubs
@@ -49,5 +47,6 @@ app.MapHub<DeathlyHallowsHub>("/hubs/deathlyHallows");
 app.MapHub<SubscribeListsHub>("/hubs/subscribeLists");
 app.MapHub<NotificationsHub>("/hubs/notifications");
 app.MapHub<BasicChatHub>("/hubs/basicChat");
+app.MapHub<OrderHub>("/hubs/order");
 
 app.Run();

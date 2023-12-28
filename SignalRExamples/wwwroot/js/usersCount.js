@@ -1,5 +1,9 @@
 ﻿// Create connection
-let connectionUserCount = new signalR.HubConnectionBuilder().withUrl("/hubs/userCount").build();
+let connectionUserCount = new signalR.HubConnectionBuilder()
+    .configureLogging(signalR.LogLevel.Information)
+    .withAutomaticReconnect()
+    .withUrl("/hubs/userCount")
+    .build();
 
 /*
 // Change transport type
@@ -59,6 +63,21 @@ function newWindowLoadedOnClient() {
     connectionUserCount.send("NewWindowLoadedWithParams", "Hello World");
     */
 }
+
+connectionUserCount.onclose(() => {
+    // Set background color to red
+    document.getElementById("mainContainer").style.backgroundColor = "red";
+});
+
+connectionUserCount.onreconnecting((error) => {
+    // Set background color to orange
+    document.getElementById("mainContainer").style.backgroundColor = "orange";
+});
+
+connectionUserCount.onreconnected((connectionId) => {
+    // Set background color to green
+    document.getElementById("mainContainer").style.backgroundColor = "green";
+});
 
 // Start connection
 function fulfilled() {
