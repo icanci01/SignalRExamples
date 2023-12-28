@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Basic Chat";
+}
+
+<div class="container">
+    <div class="row mb-1">
+        <div class="col-3">Sender</div>
+        <div class="col-5">
+            <input type="text" value="@User.Identity!.Name" id="senderEmail" class="w-100"
+                   @if (User.Identity!.IsAuthenticated)
+                   {
+                       <text>readonly</text>
+                   }/>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-3">Receiver</div>
+        <div class="col-5">
+            <input type="text" id="receiverEmail" class="w-100"
+                   @if (!User.Identity!.IsAuthenticated)
+                   {
+                       <text>readonly</text>
+                       <text>placeholder="Login to send private message"</text>
+                   }/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">Message</div>
+        <div class="col-5">
+            <input type="text" id="chatMessage" class="w-100"/>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input class="btn-primary" type="button" id="sendMessage" value="Send Message"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 w-100">
+            <ul id="messagesList"></ul>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/signalr.js"></script>
+<script src="~/js/basicChat.js"></script>
