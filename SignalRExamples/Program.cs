@@ -14,7 +14,11 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
-builder.Services.AddSignalR();
+
+// builder.Services.AddSignalR();
+
+var connectionAzureSignalR = builder.Configuration.GetConnectionString("AzureSignalRConnection") ?? throw new InvalidOperationException("Connection string 'AzureSignalRConnection' not found.");
+builder.Services.AddSignalR().AddAzureSignalR(connectionAzureSignalR);
 
 var app = builder.Build();
 
