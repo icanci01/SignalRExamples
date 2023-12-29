@@ -54,6 +54,8 @@ public class ChatRoomsController : ControllerBase
         _dbContext.ChatRoom.Remove(chatRoom);
         await _dbContext.SaveChangesAsync();
 
-        return NoContent();
+        var room = await _dbContext.ChatRoom.FirstOrDefaultAsync();
+
+        return Ok(new { deleted = id, selected = room?.Id ?? 0 });
     }
 }

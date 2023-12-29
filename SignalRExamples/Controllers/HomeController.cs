@@ -1,10 +1,13 @@
 ﻿using System.Diagnostics;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using SignalRExamples.Common;
 using SignalRExamples.Data;
 using SignalRExamples.Hubs;
 using SignalRExamples.Models;
+using SignalRExamples.Models.ViewModel;
 
 namespace SignalRExamples.Controllers;
 
@@ -76,9 +79,33 @@ public class HomeController : Controller
         return View();
     }
 
+    [Authorize]
     public IActionResult AdvancedChat()
     {
-        return View();
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        ChatViewModel chatViewModel = new()
+        {
+            Rooms = _dbContext.ChatRoom.ToList(),
+            MaxRoomsAllowed = 4,
+            UserId = userId
+        };
+
+        return View(chatViewModel);
+    }
+
+    public IActionResult FinalChat()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        ChatViewModel chatViewModel = new()
+        {
+            Rooms = _dbContext.ChatRoom.ToList(),
+            MaxRoomsAllowed = 4,
+            UserId = userId
+        };
+
+        return View(chatViewModel);
     }
 
     [ActionName("Order")]
