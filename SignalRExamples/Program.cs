@@ -15,10 +15,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-// builder.Services.AddSignalR();
+builder.Services.AddSignalR();
 
-var connectionAzureSignalR = builder.Configuration.GetConnectionString("AzureSignalRConnection") ?? throw new InvalidOperationException("Connection string 'AzureSignalRConnection' not found.");
-builder.Services.AddSignalR().AddAzureSignalR(connectionAzureSignalR);
+// var connectionAzureSignalR = builder.Configuration.GetConnectionString("AzureSignalRConnection") ?? throw new InvalidOperationException("Connection string 'AzureSignalRConnection' not found.");
+// builder.Services.AddSignalR().AddAzureSignalR(connectionAzureSignalR);
 
 var app = builder.Build();
 
