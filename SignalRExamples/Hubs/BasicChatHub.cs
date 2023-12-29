@@ -21,7 +21,7 @@ public class BasicChatHub : Hub
     [Authorize]
     public async Task SendMessageToReceiver(string sender, string receiver, string message)
     {
-        var userId = _dbContext.Users.FirstOrDefault(u => u.Email.ToLower() == receiver.ToLower()).Id;
+        var userId = _dbContext.Users.FirstOrDefault(u => u.Email != null && u.Email.ToLower() == receiver.ToLower())?.Id;
 
         if (!string.IsNullOrEmpty(userId)) await Clients.User(userId).SendAsync("MessageReceived", sender, message);
     }

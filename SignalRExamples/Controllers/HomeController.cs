@@ -12,8 +12,8 @@ public class HomeController : Controller
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly IHubContext<DeathlyHallowsHub> _deathlyHallowsHubContext;
-    private readonly IHubContext<OrderHub> _orderHubContext;
     private readonly ILogger<HomeController> _logger;
+    private readonly IHubContext<OrderHub> _orderHubContext;
 
     public HomeController(ILogger<HomeController> logger,
         IHubContext<DeathlyHallowsHub> deathlyHallowsHubContext,
@@ -76,8 +76,13 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult AdvancedChat()
+    {
+        return View();
+    }
+
     [ActionName("Order")]
-    public async Task<IActionResult> Order()
+    public Task<IActionResult> Order()
     {
         string[] name = { "Bhrugen", "Ben", "Jess", "Laura", "Ron" };
         string[] itemName = { "Food1", "Food2", "Food3", "Food4", "Food5" };
@@ -93,7 +98,7 @@ public class HomeController : Controller
             Count = index
         };
 
-        return View(order);
+        return Task.FromResult<IActionResult>(View(order));
     }
 
     [ActionName("Order")]
@@ -107,9 +112,9 @@ public class HomeController : Controller
     }
 
     [ActionName("OrderList")]
-    public async Task<IActionResult> OrderList()
+    public Task<IActionResult> OrderList()
     {
-        return View();
+        return Task.FromResult<IActionResult>(View());
     }
 
     [HttpGet]

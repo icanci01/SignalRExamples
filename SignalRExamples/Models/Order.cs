@@ -1,9 +1,11 @@
-﻿namespace SignalRExamples.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SignalRExamples.Models;
 
 public class Order
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string ItemName { get; set; }
+    [Key] public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string ItemName { get; set; } = string.Empty;
     public int Count { get; set; }
 }
