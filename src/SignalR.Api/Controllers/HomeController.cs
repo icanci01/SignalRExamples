@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using SignalR.Data.Models;
 using SignalRExamples.Common;
 using SignalRExamples.Data;
 using SignalRExamples.Hubs;

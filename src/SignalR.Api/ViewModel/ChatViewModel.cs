@@ -1,4 +1,6 @@
-﻿namespace SignalRExamples.Models.ViewModel;
+﻿using SignalR.Data.Models;
+
+namespace SignalRExamples.Models.ViewModel;
 
 public class ChatViewModel
 {

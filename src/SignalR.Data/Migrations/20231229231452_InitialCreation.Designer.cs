@@ -9,18 +9,18 @@ using SignalRExamples.Data;
 
 #nullable disable
 
-namespace SignalRExamples.Migrations
+namespace SignalR.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231229130911_ChatRooms")]
-    partial class ChatRooms
+    [Migration("20231229231452_InitialCreation")]
+    partial class InitialCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("ProductVersion", "7.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -227,7 +227,7 @@ namespace SignalRExamples.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SignalRExamples.Models.ChatRoom", b =>
+            modelBuilder.Entity("SignalR.Data.Models.ChatRoom", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -244,7 +244,37 @@ namespace SignalRExamples.Migrations
                     b.ToTable("ChatRoom");
                 });
 
-            modelBuilder.Entity("SignalRExamples.Models.Order", b =>
+            modelBuilder.Entity("SignalR.Data.Models.MessageHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ChatRoomId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatRoomId");
+
+                    b.ToTable("MessageHistory");
+                });
+
+            modelBuilder.Entity("SignalR.Data.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -317,6 +347,22 @@ namespace SignalRExamples.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SignalR.Data.Models.MessageHistory", b =>
+                {
+                    b.HasOne("SignalR.Data.Models.ChatRoom", "ChatRoom")
+                        .WithMany("MessageHistory")
+                        .HasForeignKey("ChatRoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChatRoom");
+                });
+
+            modelBuilder.Entity("SignalR.Data.Models.ChatRoom", b =>
+                {
+                    b.Navigation("MessageHistory");
                 });
 #pragma warning restore 612, 618
         }

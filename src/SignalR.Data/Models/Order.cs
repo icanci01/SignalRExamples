@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SignalRExamples.Models;
+namespace SignalR.Data.Models;
 
 public class Order
 {

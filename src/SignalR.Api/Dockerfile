@@ -8,17 +8,17 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["SignalRExamples/SignalRExamples.csproj", "SignalRExamples/"]
-RUN dotnet restore "./SignalRExamples/./SignalRExamples.csproj"
+COPY ["src/SignalR.Api/SignalR.Api.csproj", "SignalR.Api/"]
+RUN dotnet restore "./SignalR.Api/./SignalR.Api.csproj"
 COPY . .
-WORKDIR "/src/SignalRExamples"
-RUN dotnet build "./SignalRExamples.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/SignalR.Api"
+RUN dotnet build "./SignalR.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./SignalRExamples.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./SignalR.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SignalRExamples.dll"]
+ENTRYPOINT ["dotnet", "SignalR.Api.dll"]
