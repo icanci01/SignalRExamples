@@ -1,8 +1,9 @@
 ﻿"use strict";
 
 let connectionFinalChat = new signalR.HubConnectionBuilder()
-    .withUrl("/hubs/advancedChat")
     .withAutomaticReconnect([0, 1000, 5000, null])
+    .configureLogging(signalR.LogLevel.None)
+    .withUrl("/hubs/advancedChat")
     .build();
 
 connectionFinalChat.on("ReceiveOnlineUsers", function (response) {
@@ -156,14 +157,25 @@ function deletePrivateChat(chatId) {
     });
 }
 
+connectionFinalChat.onreconnecting(() => {
+    setStatusReconnecting();
+});
+
+connectionFinalChat.onreconnected(() => {
+    setStatusConnected();
+});
+
+connectionFinalChat.onclose(() => {
+    setStatusDisconnected();
+});
+
 // Start connectionFinalChat
 function fulfilled() {
-    console.log("Connection to Advanced Chat Hub Fulfilled");
+    setStatusConnected();
 }
 
 function rejected() {
-    // rejected logs
-    console.log("Connection to Advanced Chat Hub Rejected");
+    setStatusFailed();
 }
 
 connectionFinalChat.start().then(fulfilled, rejected);

@@ -1,7 +1,7 @@
 ﻿// Create connection
 let connectionUserCount = new signalR.HubConnectionBuilder()
+    .withAutomaticReconnect([0, 1000, 5000, null])
     .configureLogging(signalR.LogLevel.None)
-    .withAutomaticReconnect()
     .withUrl("/hubs/userCount")
     .build();
 
@@ -17,15 +17,11 @@ connectionUserCount.on("updateTotalUsers", (value) => {
 });
 
 // Invoke hub methods aka send notifications
-function newWindowLoadedOnClient() {
-    connectionUserCount.send("NewWindowLoaded");
-}
-
-connectionUserCount.onreconnecting((error) => {
+connectionUserCount.onreconnecting(() => {
     setStatusReconnecting();
 });
 
-connectionUserCount.onreconnected((connectionId) => {
+connectionUserCount.onreconnected(() => {
     setStatusConnected();
 });
 
@@ -35,13 +31,12 @@ connectionUserCount.onclose(() => {
 
 // Start connection
 function fulfilled() {
-    console.log("Connection to User Hub Successful");
     setStatusConnected();
-    newWindowLoadedOnClient();
+    connectionUserCount.send("NewWindowLoaded");
 }
 
 function rejected() {
-    console.log("Connection to User Hub Rejected");
+    setStatusFailed();
 }
 
 connectionUserCount.start().then(fulfilled, rejected);

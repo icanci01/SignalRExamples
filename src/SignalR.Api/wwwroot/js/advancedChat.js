@@ -1,6 +1,7 @@
 ﻿// Create connection
 let connectionAdvancedChat = new signalR.HubConnectionBuilder()
     .withAutomaticReconnect([0, 1000, 5000, null])
+    .configureLogging(signalR.LogLevel.None)
     .withUrl("/hubs/advancedChat")
     .build();
 
@@ -203,14 +204,25 @@ function addMessage(msg) {
     ui.appendChild(li);
 }
 
+connectionAdvancedChat.onreconnecting(() => {
+    setStatusReconnecting();
+});
+
+connectionAdvancedChat.onreconnected(() => {
+    setStatusConnected();
+});
+
+connectionAdvancedChat.onclose(() => {
+    setStatusDisconnected();
+});
+
 // Start connection
 function fulfilled() {
-    console.log("Connection to Advanced Chat Hub Fulfilled");
+    setStatusConnected();
 }
 
 function rejected() {
-    // rejected logs
-    console.log("Connection to Advanced Chat Hub Rejected");
+    setStatusFailed();
 }
 
 connectionAdvancedChat.start().then(fulfilled, rejected);

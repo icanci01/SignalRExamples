@@ -4,22 +4,36 @@ let stoneElement = document.getElementById("stoneCounter");
 let cloakElement = document.getElementById("cloakCounter");
 
 // Create connection
-let connectionDeathlyHallows = new signalR.HubConnectionBuilder().withUrl("/hubs/deathlyHallows").build();
+let connectionVoting = new signalR.HubConnectionBuilder()
+    .withAutomaticReconnect([0, 1000, 5000, null])
+    .configureLogging(signalR.LogLevel.None)
+    .withUrl("/hubs/deathlyHallows")
+    .build();
 
 // Connect to methods that hub invokes aka receive notifications from hub
-connectionDeathlyHallows.on("updateDeathlyHallowCount", (wand, sword, stone, cloak) => {
+connectionVoting.on("updateDeathlyHallowCount", (wand, sword, stone, cloak) => {
     wandElement.innerText = wand.toString();
     swordElement.innerText = sword.toString();
     stoneElement.innerText = stone.toString();
     cloakElement.innerText = cloak.toString();
 });
 
+connectionVoting.onreconnecting((error) => {
+    setStatusReconnecting();
+});
+
+connectionVoting.onreconnected((connectionId) => {
+    setStatusConnected();
+});
+
+connectionVoting.onclose(() => {
+    setStatusDisconnected();
+});
+
 // Start connection
 function fulfilled() {
-    // do something on start
-    console.log("Connection to Deathly Hallows Hub Successful");
-
-    connectionDeathlyHallows.invoke("GetRaceStatus").then((value) => {
+    setStatusConnected();
+    connectionVoting.invoke("GetRaceStatus").then((value) => {
         wandElement.innerText = value["wand"].toString();
         swordElement.innerText = value["sword"].toString();
         stoneElement.innerText = value["stone"].toString();
@@ -28,11 +42,10 @@ function fulfilled() {
 }
 
 function rejected() {
-    // rejected logs
-    console.log("Connection to Deathly Hallows Hub Rejected");
+    setStatusFailed();
 }
 
-connectionDeathlyHallows.start().then(fulfilled, rejected);
+connectionVoting.start().then(fulfilled, rejected);
 
 document.getElementById("btnWand").addEventListener("click", function (event) {
     event.preventDefault();

@@ -18,7 +18,7 @@ This is a project showcasing various use cases and examples using SignalR.
 
 ## Prerequisites
 
-Make sure you have the .NET 7.0 SDK installed on your machine.
+Make sure you have the .NET 8.0 SDK installed on your machine.
 
 ## Usage
 
