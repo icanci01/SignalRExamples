@@ -1,4 +1,4 @@
-﻿namespace SignalR.Api.Common;
+﻿namespace SignalR.Hubs.Common;
 
 public static class SD
 {

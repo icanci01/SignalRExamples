@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SignalR.Api.Hubs;
 using SignalR.Data;
+using SignalR.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 

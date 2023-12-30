@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.SignalR;
 using SignalR.Data;
 
-namespace SignalR.Api.Hubs;
+namespace SignalR.Hubs;
 
 public class BasicChatHub : Hub
 {

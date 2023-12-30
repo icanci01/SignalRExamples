@@ -1,4 +1,4 @@
-﻿namespace SignalR.Api.Hubs;
+﻿namespace SignalR.Hubs.Helpers;
 
 public static class HubConnections
 {

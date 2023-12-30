@@ -1,8 +1,9 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.SignalR;
 using SignalR.Data;
+using SignalR.Hubs.Helpers;
 
-namespace SignalR.Api.Hubs;
+namespace SignalR.Hubs;
 
 public class AdvancedChatHub : Hub
 {

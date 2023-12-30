@@ -3,11 +3,11 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using SignalR.Api.Common;
-using SignalR.Api.Hubs;
 using SignalR.Api.ViewModel;
 using SignalR.Data;
 using SignalR.Data.Models;
+using SignalR.Hubs;
+using SignalR.Hubs.Common;
 
 namespace SignalR.Api.Controllers;
 
