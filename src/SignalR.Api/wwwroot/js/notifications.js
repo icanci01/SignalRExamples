@@ -6,7 +6,11 @@ let notificationsList = document.getElementById("messageList");
 btn_sendNotification.disabled = true;
 
 // Create connection
-let connectionNotifications = new signalR.HubConnectionBuilder().withUrl("/hubs/notifications").build();
+let connectionNotifications = new signalR.HubConnectionBuilder()
+    .withAutomaticReconnect([0, 1000, 5000, null])
+    .configureLogging(signalR.LogLevel.None)
+    .withUrl("/hubs/notifications")
+    .build();
 
 btn_sendNotification.addEventListener("click", function (event) {
     connectionNotifications.send("SendNotification", notificationMessage.value).then(function () {
@@ -23,8 +27,22 @@ connectionNotifications.on("notificationReceived", function (message, count) {
     notificationCounter.innerHTML = "<span>(" + count + ")</span>";
 });
 
+connectionNotifications.onreconnecting(() => {
+    setStatusReconnecting();
+});
+
+connectionNotifications.onreconnected(() => {
+    setStatusConnected();
+});
+
+connectionNotifications.onclose(() => {
+    setStatusDisconnected();
+});
+
+
 // Start connection
 function fulfilled() {
+    setStatusConnected();
     btn_sendNotification.disabled = false;
     connectionNotifications.on("notificationStatus", (notifications, count) => {
         notifications.forEach(notification => {
@@ -37,7 +55,7 @@ function fulfilled() {
 }
 
 function rejected() {
-    console.log("Connection to Subscribe Lists Hub Rejected");
+    setStatusFailed();
 }
 
 connectionNotifications.start().then(fulfilled, rejected);

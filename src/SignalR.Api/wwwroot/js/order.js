@@ -30,20 +30,35 @@ function loadDataTable() {
     });
 }
 
-var connectionOrder = new signalR.HubConnectionBuilder().withUrl("/hubs/order").build();
+var connectionOrder = new signalR.HubConnectionBuilder()
+    .withAutomaticReconnect([0, 1000, 5000, null])
+    .configureLogging(signalR.LogLevel.None)
+    .withUrl("/hubs/order")
+    .build();
 
 connectionOrder.on("newOrderPlaced", () => {
     dataTable.ajax.reload();
     toastr.success("New Order Received");
 });
 
+connectionOrder.onreconnecting(() => {
+    setStatusReconnecting();
+});
+
+connectionOrder.onreconnected(() => {
+    setStatusConnected();
+});
+
+connectionOrder.onclose(() => {
+    setStatusDisconnected();
+});
+
 function fulfilled() {
-    console.log("Connection to Order Hub Fulfilled");
+    setStatusConnected();
 }
 
 function rejected() {
-    // rejected logs
-    console.log("Connection to Order Hub Rejected");
+    setStatusFailed();
 }
 
 connectionOrder.start().then(fulfilled, rejected);

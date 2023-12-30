@@ -7,7 +7,11 @@ let messageList = document.getElementById("messagesList");
 btn_send.disabled = true;
 
 // Create connection
-let connectionBasicChat = new signalR.HubConnectionBuilder().withUrl("/hubs/basicChat").build();
+let connectionBasicChat = new signalR.HubConnectionBuilder()
+    .withAutomaticReconnect([0, 1000, 5000, null])
+    .configureLogging(signalR.LogLevel.None)
+    .withUrl("/hubs/basicChat")
+    .build();
 
 btn_send.addEventListener("click", function (event) {
     if (receiverEmail.value !== "") {
@@ -32,15 +36,27 @@ connectionBasicChat.on("MessageReceived", function (user, message) {
     toastr.success(`New message from ${user}`);
 });
 
+connectionBasicChat.onreconnecting(() => {
+    setStatusReconnecting();
+});
+
+connectionBasicChat.onreconnected(() => {
+    setStatusConnected();
+});
+
+connectionBasicChat.onclose(() => {
+    setStatusDisconnected();
+});
+
+
 // Start connection
 function fulfilled() {
-    console.log("Connection to Basic Chat Hub Established");
+    setStatusConnected();
     btn_send.disabled = false;
 }
 
 function rejected() {
-    // rejected logs
-    console.log("Connection to Basic Chat Hub Rejected");
+    setStatusFailed();
 }
 
 connectionBasicChat.start().then(fulfilled, rejected);

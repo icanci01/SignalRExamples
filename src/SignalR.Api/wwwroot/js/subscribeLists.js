@@ -16,7 +16,11 @@ let trigger_stockMarket = document.getElementById("trigger_stockMarket");
 let trigger_sportScores = document.getElementById("trigger_sportScores");
 
 // Create connection
-let connectionSubscribeLists = new signalR.HubConnectionBuilder().withUrl("/hubs/subscribeLists").build();
+let connectionSubscribeLists = new signalR.HubConnectionBuilder()
+    .withAutomaticReconnect([0, 1000, 5000, null])
+    .configureLogging(signalR.LogLevel.None)
+    .withUrl("/hubs/subscribeLists")
+    .build();
 
 // Connect to methods that hub invokes aka receive notifications from hub
 btn_newsUpdates.addEventListener("click", function (event) {
@@ -146,15 +150,26 @@ connectionSubscribeLists.on("triggerListNotification", (listName) => {
     toastr.success(`A notification for ${listName} has been triggered`);
 });
 
+connectionSubscribeLists.onreconnecting(() => {
+    setStatusReconnecting();
+});
+
+connectionSubscribeLists.onreconnected(() => {
+    setStatusConnected();
+});
+
+connectionSubscribeLists.onclose(() => {
+    setStatusDisconnected();
+});
+
+
 // Start connection
 function fulfilled() {
-    // do something on start
-    console.log("Connection to Subscribe Lists Hub Successful");
+    setStatusConnected();
 }
 
 function rejected() {
-    // rejected logs
-    console.log("Connection to Subscribe Lists Hub Rejected");
+    setStatusFailed();
 }
 
 connectionSubscribeLists.start().then(fulfilled, rejected);

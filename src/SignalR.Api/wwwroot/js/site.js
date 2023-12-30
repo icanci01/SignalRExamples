@@ -12,3 +12,8 @@ function setStatusDisconnected() {
     document.getElementById("connectionStatusText").innerText = "Disconnected";
     document.getElementById("connectionStatus").style.color = "red";
 }
+
+function setStatusFailed() {
+    document.getElementById("connectionStatusText").innerText = "Failed";
+    document.getElementById("connectionStatus").style.color = "red";
+}

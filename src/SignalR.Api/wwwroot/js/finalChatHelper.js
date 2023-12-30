@@ -125,8 +125,6 @@
 }
 
 function receivePublicMessage(roomId, userId, username, message) {
-    console.log("receivePublicMessage" + roomId + " " + userId + " " + username + " " + message);
-
     let ulmessagesList = document.getElementById(`ulmessagesList${roomId}`);
 
     let li = document.createElement("li");
