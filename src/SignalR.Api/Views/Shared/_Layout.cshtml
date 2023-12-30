@@ -15,7 +15,10 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BackendHost-SignalR</a>
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="~/images/logo-transparent.png" alt="Logo" class="img-fluid" style="max-height: 50px;">
+            </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -26,10 +29,10 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="DeathlyHallow">Deathly Hallows</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Voting">Voting</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SubscribeLists">Subscribe Lists</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SubscribeLists">Subscriptions</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Notifications">Notifications</a>
@@ -62,9 +65,18 @@
 </div>
 
 <footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2023 - SignalR
-    </div>
+    <section class="container">
+        <section class="row">
+            <section id="copyrightSection" class="col">
+                &copy; <time datetime="2023">2023</time> - SignalRExamples
+            </section>
+            <section id="serverStatusSection" class="col text-end">
+                <div id="connectionStatus">
+                    <i class="bi bi-server"></i> <span id="connectionStatusText">Connecting...</span>
+                </div>
+            </section>
+        </section>
+    </section>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

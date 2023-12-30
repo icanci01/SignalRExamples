@@ -1,4 +1,14 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function setStatusConnected() {
+    document.getElementById("connectionStatusText").innerText = "Connected";
+    document.getElementById("connectionStatus").style.color = "green";
+}
 
-// Write your JavaScript code.
+function setStatusReconnecting() {
+    document.getElementById("connectionStatusText").innerText = "Reconnecting";
+    document.getElementById("connectionStatus").style.color = "orange";
+}
+
+function setStatusDisconnected() {
+    document.getElementById("connectionStatusText").innerText = "Disconnected";
+    document.getElementById("connectionStatus").style.color = "red";
+}

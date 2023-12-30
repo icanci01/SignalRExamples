@@ -2,34 +2,61 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container" id="mainContainer">
-    <div class="row">
-        <div class="col-4">Total Views: </div>
-        <div class="col-4">
-            <span id="totalViewsCounter"></span>
-        </div>
+<div class="container mt-3">
+    <div class="jumbotron">
+        <h1 class="display-4">Explore Our Interactive SignalR Examples!</h1>
+        <p class="lead">
+            Welcome to our interactive playground featuring a diverse range of SignalR applications!
+            Whether you're a developer keen on learning about real-time web functionalities or just curious
+            about how real-time web technologies work, you've come to the right place.
+        </p>
+        <hr class="my-4">
+        <p>
+            <strong>What We Offer:</strong>
+        </p>
+        <ul>
+            <li>Voting: Participate in live polls and see results update in real-time.</li>
+            <li>Subscriptions: Experiment with different subscription models and observe instant notifications.</li>
+            <li>Notifications: Get a feel of how instant notifications can enhance user experience.</li>
+            <li>Basic Chat: Engage in our basic chat room and experience real-time messaging.</li>
+            <li>Advanced Chat: Dive into more complex chat functionalities including private messaging.</li>
+            <li>Final Chat: Explore the full range of chat functionalities including group chat and direct messaging.</li>
+            <li>Place Order: Try out our simulated ordering system and watch order statuses update live.</li>
+            <li>Orders List: View a dynamic list of orders being updated in real-time.</li>
+        </ul>
+        <p class="lead">
+            Each example is designed to showcase the power and flexibility of SignalR in creating responsive and
+            interactive web applications. Feel free to explore and interact with these demos to get a first-hand
+            experience of real-time web technology in action.
+        </p>
+        <p class="lead">
+            Enjoy your exploration and happy learning!
+        </p>
+
+        <p class="lead">
+            <a href="https://github.com/icanci01/SignalRExamples" target="_blank" class="btn btn-primary btn-md" role="button">
+                <span class="ms-1"><i class="bi bi-github"></i></span> Source Code on GitHub
+            </a>
+        </p>
     </div>
 
-    @* <div class="row">
-        <div class="col-4">Total Views With Return: </div>
-        <div class="col-4">
-            <span id="totalViewsReturn"></span>
-        </div>
-    </div>
+    <hr class="my-4">
+    <h2 class="text-center">Page Statistics</h2>
+    <br />
     <div class="row">
-        <div class="col-4">Total Views With Params: </div>
-        <div class="col-4">
-            <span id="totalViewsParams"></span>
+        <div class="col-md-6">
+            <div class="alert alert-info">
+                <strong>Total Visits:</strong> <span id="totalVisits">0</span>
+            </div>
         </div>
-    </div> *@
-
-    <div class="row">
-        <div class="col-4">Total Connections/Users: </div>
-        <div class="col-4">
-            <span id="totalUsersCounter"></span>
+        <div class="col-md-6">
+            <div class="alert alert-warning">
+                <strong>Active Connections:</strong> <span id="activeConnections">0</span>
+            </div>
         </div>
     </div>
 </div>
+
 
 <script src="~/js/signalr.js"></script>
 <script src="~/js/usersCount.js"></script>

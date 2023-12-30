@@ -1,93 +1,46 @@
 ﻿// Create connection
 let connectionUserCount = new signalR.HubConnectionBuilder()
-    .configureLogging(signalR.LogLevel.Information)
+    .configureLogging(signalR.LogLevel.None)
     .withAutomaticReconnect()
     .withUrl("/hubs/userCount")
     .build();
 
-/*
-// Change transport type
-let connectionUserCount = new signalR.HubConnectionBuilder().withUrl("/hubs/userCount", signalR.HttpTransportType.WebSockets).build(); // Default
-let connectionUserCount = new signalR.HubConnectionBuilder().withUrl("/hubs/userCount", signalR.HttpTransportType.ServerSentEvents).build();
-let connectionUserCount = new signalR.HubConnectionBuilder().withUrl("/hubs/userCount", signalR.HttpTransportType.LongPolling).build();
-let connectionUserCount = new signalR.HubConnectionBuilder().withUrl("/hubs/userCount", signalR.HttpTransportType.None).build(); // Not recommended
-*/
-
-/*
-// Configure logging
-let connectionUserCount = new signalR.HubConnectionBuilder().withUrl("/hubs/userCount").configureLogging(signalR.LogLevel.Information).build(); // Default
-let connectionUserCount = new signalR.HubConnectionBuilder().withUrl("/hubs/userCount").configureLogging(signalR.LogLevel.Trace).build();
-let connectionUserCount = new signalR.HubConnectionBuilder().withUrl("/hubs/userCount").configureLogging(signalR.LogLevel.Debug).build();
-let connectionUserCount = new signalR.HubConnectionBuilder().withUrl("/hubs/userCount").configureLogging(signalR.LogLevel.Warning).build();
-let connectionUserCount = new signalR.HubConnectionBuilder().withUrl("/hubs/userCount").configureLogging(signalR.LogLevel.Error).build();
-let connectionUserCount = new signalR.HubConnectionBuilder().withUrl("/hubs/userCount").configureLogging(signalR.LogLevel.Critical).build();
-let connectionUserCount = new signalR.HubConnectionBuilder().withUrl("/hubs/userCount").configureLogging(signalR.LogLevel.None).build();
-*/
-
 // Connect to methods that hub invokes aka receive notifications from hub
 connectionUserCount.on("updateTotalViews", (value) => {
-    let newCountSpan = document.getElementById("totalViewsCounter");
+    let newCountSpan = document.getElementById("totalVisits");
     newCountSpan.innerText = value;
 });
-
-/*
-connectionUserCount.on("updateTotalViewsReturn", (value) => {
-    let newCountSpan = document.getElementById("totalViewsReturn");
-    newCountSpan.innerText = value;
-});
-
-connectionUserCount.on("updateTotalViewsWithParams", (value) => {
-    let newCountSpan = document.getElementById("totalViewsParams");
-    newCountSpan.innerText = value;
-});
-*/
 
 connectionUserCount.on("updateTotalUsers", (value) => {
-    let newCountSpan = document.getElementById("totalUsersCounter");
+    let newCountSpan = document.getElementById("activeConnections");
     newCountSpan.innerText = value;
 });
 
 // Invoke hub methods aka send notifications
 function newWindowLoadedOnClient() {
-    // Send example
     connectionUserCount.send("NewWindowLoaded");
-
-    /*
-    // Invoke example with return
-    connectionUserCount.invoke("NewWindowLoadedWithReturn").then((value) => {
-        let newCountSpan = document.getElementById("totalViewsReturn");
-        newCountSpan.innerText = value;
-    });
-
-    // Invoke example with parameter
-    connectionUserCount.send("NewWindowLoadedWithParams", "Hello World");
-    */
 }
 
-connectionUserCount.onclose(() => {
-    // Set background color to red
-    document.getElementById("mainContainer").style.backgroundColor = "red";
-});
-
 connectionUserCount.onreconnecting((error) => {
-    // Set background color to orange
-    document.getElementById("mainContainer").style.backgroundColor = "orange";
+    setStatusReconnecting();
 });
 
 connectionUserCount.onreconnected((connectionId) => {
-    // Set background color to green
-    document.getElementById("mainContainer").style.backgroundColor = "green";
+    setStatusConnected();
+});
+
+connectionUserCount.onclose(() => {
+    setStatusDisconnected();
 });
 
 // Start connection
 function fulfilled() {
-    // do something on start
     console.log("Connection to User Hub Successful");
+    setStatusConnected();
     newWindowLoadedOnClient();
 }
 
 function rejected() {
-    // rejected logs
     console.log("Connection to User Hub Rejected");
 }
 
