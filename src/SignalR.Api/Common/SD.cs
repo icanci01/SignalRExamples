@@ -1,4 +1,4 @@
-﻿namespace SignalRExamples.Common;
+﻿namespace SignalR.Api.Common;
 
 public static class SD
 {

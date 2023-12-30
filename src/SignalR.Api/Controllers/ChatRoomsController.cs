@@ -1,10 +1,10 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SignalR.Data;
 using SignalR.Data.Models;
-using SignalRExamples.Data;
 
-namespace SignalRExamples.Controllers;
+namespace SignalR.Api.Controllers;
 
 [ApiController]
 public class ChatRoomsController : ControllerBase

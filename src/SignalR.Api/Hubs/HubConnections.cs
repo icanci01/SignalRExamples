@@ -1,4 +1,4 @@
-﻿namespace SignalRExamples.Hubs;
+﻿namespace SignalR.Api.Hubs;
 
 public static class HubConnections
 {
@@ -30,6 +30,7 @@ public static class HubConnections
         {
             Console.WriteLine(ex.Message);
         }
+
         return false;
     }
 

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SignalR.Data.Models;
 
-namespace SignalRExamples.Data;
+namespace SignalR.Data;
 
 public class ApplicationDbContext : IdentityDbContext
 {

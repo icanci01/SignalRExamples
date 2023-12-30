@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.SignalR;
-using SignalRExamples.Data;
+using SignalR.Data;
 
-namespace SignalRExamples.Hubs;
+namespace SignalR.Api.Hubs;
 
 public class AdvancedChatHub : Hub
 {
@@ -91,7 +91,7 @@ public class AdvancedChatHub : Hub
         if (string.IsNullOrEmpty(senderId))
             throw new Exception("User not found");
 
-        var users = new string[] { senderId, receiverId };
+        var users = new[] { senderId, receiverId };
 
         await Clients.Users(users).SendAsync("ReceivePrivateMessage", senderId, senderName, receiverId, receiverName, message, Guid.NewGuid());
     }

@@ -6,7 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>aspnet-SignalRExamples-632344eb-558b-404a-be7b-606f261ba4e0</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <RootNamespace>SignalRExamples</RootNamespace>
+        <RootNamespace>SignalR.Api</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -22,7 +22,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SignalR.Data\SignalR.Data.csproj" />
+        <ProjectReference Include="..\SignalR.Data\SignalR.Data.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="Properties\serviceDependencies.json"/>
+        <None Remove="Properties\serviceDependencies.local.json"/>
     </ItemGroup>
 
 </Project>

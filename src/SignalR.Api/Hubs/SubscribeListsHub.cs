@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace SignalRExamples.Hubs;
+namespace SignalR.Api.Hubs;
 
 public class SubscribeListsHub : Hub
 {

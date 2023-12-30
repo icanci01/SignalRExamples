@@ -1,6 +1,6 @@
 ﻿using SignalR.Data.Models;
 
-namespace SignalRExamples.Models.ViewModel;
+namespace SignalR.Api.ViewModel;
 
 public class ChatViewModel
 {

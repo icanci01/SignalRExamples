@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using SignalRExamples.Common;
+using SignalR.Api.Common;
 
-namespace SignalRExamples.Hubs;
+namespace SignalR.Api.Hubs;
 
 public class DeathlyHallowsHub : Hub
 {

@@ -1,4 +1,4 @@
-namespace SignalR.Data.Models;
+namespace SignalR.Api.ViewModel;
 
 public class ErrorViewModel
 {

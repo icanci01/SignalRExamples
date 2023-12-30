@@ -3,14 +3,13 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using SignalR.Api.Common;
+using SignalR.Api.Hubs;
+using SignalR.Api.ViewModel;
+using SignalR.Data;
 using SignalR.Data.Models;
-using SignalRExamples.Common;
-using SignalRExamples.Data;
-using SignalRExamples.Hubs;
-using SignalRExamples.Models;
-using SignalRExamples.Models.ViewModel;
 
-namespace SignalRExamples.Controllers;
+namespace SignalR.Api.Controllers;
 
 public class HomeController : Controller
 {

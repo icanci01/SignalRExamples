@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using SignalRExamples.Data;
+using SignalR.Data;
 
-namespace SignalRExamples.Hubs;
+namespace SignalR.Api.Hubs;
 
 public class BasicChatHub : Hub
 {
