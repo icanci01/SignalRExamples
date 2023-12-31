@@ -7,9 +7,9 @@ namespace SignalR.Hubs;
 
 public class AdvancedChatHub : Hub
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public AdvancedChatHub(ApplicationDbContext dbContext)
+    public AdvancedChatHub(AppDbContext dbContext)
     {
         _dbContext = dbContext;
     }

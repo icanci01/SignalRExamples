@@ -6,9 +6,9 @@ namespace SignalR.Hubs;
 
 public class BasicChatHub : Hub
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public BasicChatHub(ApplicationDbContext dbContext)
+    public BasicChatHub(AppDbContext dbContext)
     {
         _dbContext = dbContext;
     }

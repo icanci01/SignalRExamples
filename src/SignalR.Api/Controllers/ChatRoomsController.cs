@@ -9,9 +9,9 @@ namespace SignalR.Api.Controllers;
 [ApiController]
 public class ChatRoomsController : ControllerBase
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public ChatRoomsController(ApplicationDbContext dbContext)
+    public ChatRoomsController(AppDbContext dbContext)
     {
         _dbContext = dbContext;
     }

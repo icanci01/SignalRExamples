@@ -13,7 +13,7 @@ namespace SignalR.Api.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
     private readonly IHubContext<DeathlyHallowsHub> _deathlyHallowsHubContext;
     private readonly ILogger<HomeController> _logger;
     private readonly IHubContext<OrderHub> _orderHubContext;
@@ -21,7 +21,7 @@ public class HomeController : Controller
     public HomeController(ILogger<HomeController> logger,
         IHubContext<DeathlyHallowsHub> deathlyHallowsHubContext,
         IHubContext<OrderHub> orderHubContext,
-        ApplicationDbContext dbContext)
+        AppDbContext dbContext)
     {
         _logger = logger;
         _deathlyHallowsHubContext = deathlyHallowsHubContext;
