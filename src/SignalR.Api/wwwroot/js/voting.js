@@ -1,28 +1,28 @@
-﻿let wandElement = document.getElementById("wandCounter");
-let swordElement = document.getElementById("swordCounter");
-let stoneElement = document.getElementById("stoneCounter");
-let cloakElement = document.getElementById("cloakCounter");
+﻿let apolloCounter = document.getElementById("apolloCounter");
+let swordElement = document.getElementById("voyagerCounter");
+let hubbleCounter = document.getElementById("hubbleCounter");
+let marsCounter = document.getElementById("marsCounter");
 
 // Create connection
 let connectionVoting = new signalR.HubConnectionBuilder()
     .withAutomaticReconnect([0, 1000, 5000, null])
     .configureLogging(signalR.LogLevel.None)
-    .withUrl("/hubs/deathlyHallows")
+    .withUrl("/hubs/voting")
     .build();
 
 // Connect to methods that hub invokes aka receive notifications from hub
-connectionVoting.on("updateDeathlyHallowCount", (wand, sword, stone, cloak) => {
-    wandElement.innerText = wand.toString();
-    swordElement.innerText = sword.toString();
-    stoneElement.innerText = stone.toString();
-    cloakElement.innerText = cloak.toString();
+connectionVoting.on("updateVotingCount", (apollo, voyager, hubble, mars) => {
+    apolloCounter.innerText = apollo.toString();
+    swordElement.innerText = voyager.toString();
+    hubbleCounter.innerText = hubble.toString();
+    marsCounter.innerText = mars.toString();
 });
 
-connectionVoting.onreconnecting((error) => {
+connectionVoting.onreconnecting(() => {
     setStatusReconnecting();
 });
 
-connectionVoting.onreconnected((connectionId) => {
+connectionVoting.onreconnected(() => {
     setStatusConnected();
 });
 
@@ -33,11 +33,11 @@ connectionVoting.onclose(() => {
 // Start connection
 function fulfilled() {
     setStatusConnected();
-    connectionVoting.invoke("GetRaceStatus").then((value) => {
-        wandElement.innerText = value["wand"].toString();
-        swordElement.innerText = value["sword"].toString();
-        stoneElement.innerText = value["stone"].toString();
-        cloakElement.innerText = value["cloak"].toString();
+    connectionVoting.invoke("GetVotingStatus").then((value) => {
+        apolloCounter.innerText = value["apollo"].toString();
+        swordElement.innerText = value["voyager"].toString();
+        hubbleCounter.innerText = value["hubble"].toString();
+        marsCounter.innerText = value["mars"].toString();
     });
 }
 
@@ -47,30 +47,30 @@ function rejected() {
 
 connectionVoting.start().then(fulfilled, rejected);
 
-document.getElementById("btnWand").addEventListener("click", function (event) {
+document.getElementById("btnApollo").addEventListener("click", function (event) {
     event.preventDefault();
-    fetch("/Home/DeathlyHallows?type=wand", {
+    fetch("/Home/SpaceMission?type=apollo", {
         method: "GET"
     }).then();
 });
 
-document.getElementById("btnSword").addEventListener("click", function (event) {
+document.getElementById("btnVoyager").addEventListener("click", function (event) {
     event.preventDefault();
-    fetch("/Home/DeathlyHallows?type=sword", {
+    fetch("/Home/SpaceMission?type=voyager", {
         method: "GET"
     }).then();
 });
 
-document.getElementById("btnStone").addEventListener("click", function (event) {
+document.getElementById("btnHubble").addEventListener("click", function (event) {
     event.preventDefault();
-    fetch("/Home/DeathlyHallows?type=stone", {
+    fetch("/Home/SpaceMission?type=hubble", {
         method: "GET"
     }).then();
 });
 
-document.getElementById("btnCloak").addEventListener("click", function (event) {
+document.getElementById("btnMars").addEventListener("click", function (event) {
     event.preventDefault();
-    fetch("/Home/DeathlyHallows?type=cloak", {
+    fetch("/Home/SpaceMission?type=mars", {
         method: "GET"
     }).then();
 });

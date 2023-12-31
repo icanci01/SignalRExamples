@@ -2,21 +2,21 @@
 
 public static class SD
 {
-    public const string Wand = "wand";
-    public const string Sword = "sword";
-    public const string Stone = "stone";
-    public const string Cloak = "cloak";
+    public const string Apollo = "apollo";
+    public const string Voyager = "voyager";
+    public const string Hubble = "hubble";
+    public const string Mars = "mars";
 
-    public static Dictionary<string, int> DeathlyHallowRace;
+    public static Dictionary<string, int> SpaceMissionVoting;
 
     static SD()
     {
-        DeathlyHallowRace = new Dictionary<string, int>
+        SpaceMissionVoting = new Dictionary<string, int>
         {
-            { Wand, 0 },
-            { Sword, 0 },
-            { Stone, 0 },
-            { Cloak, 0 }
+            { Apollo, 0 },
+            { Voyager, 0 },
+            { Hubble, 0 },
+            { Mars, 0 }
         };
     }
 }
