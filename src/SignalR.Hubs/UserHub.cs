@@ -1,11 +1,19 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using SignalR.Data;
+using SignalR.Data.Models;
 
 namespace SignalR.Hubs;
 
 public class UserHub : Hub
 {
-    public static int TotalViewsSimple { get; set; }
+    private readonly AppDbContext _dbContext;
     public static int TotalUsers { get; set; }
+
+    public UserHub(AppDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
 
     public override Task OnConnectedAsync()
     {
@@ -23,7 +31,21 @@ public class UserHub : Hub
 
     public async Task NewWindowLoaded()
     {
-        TotalViewsSimple++;
-        await Clients.All.SendAsync("updateTotalViews", TotalViewsSimple);
+        var pageStatistic = await _dbContext.PageStatistics.FirstOrDefaultAsync();
+
+        if (pageStatistic == null)
+        {
+            pageStatistic = new PageStatistic { TotalViews = 1 };
+            await _dbContext.PageStatistics.AddAsync(pageStatistic);
+            await _dbContext.SaveChangesAsync();
+        }
+        else
+        {
+            pageStatistic.TotalViews++;
+            _dbContext.PageStatistics.Update(pageStatistic);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        await Clients.All.SendAsync("updateTotalViews", pageStatistic.TotalViews);
     }
 }
