@@ -14,17 +14,14 @@ namespace SignalR.Api.Controllers;
 public class HomeController : Controller
 {
     private readonly AppDbContext _dbContext;
-    private readonly IHubContext<DeathlyHallowsHub> _deathlyHallowsHubContext;
-    private readonly ILogger<HomeController> _logger;
+    private readonly IHubContext<VotingHub> _spaceMissionHubContext;
     private readonly IHubContext<OrderHub> _orderHubContext;
 
-    public HomeController(ILogger<HomeController> logger,
-        IHubContext<DeathlyHallowsHub> deathlyHallowsHubContext,
-        IHubContext<OrderHub> orderHubContext,
-        AppDbContext dbContext)
+    public HomeController(AppDbContext dbContext,
+        IHubContext<VotingHub> spaceMissionHubContext,
+        IHubContext<OrderHub> orderHubContext)
     {
-        _logger = logger;
-        _deathlyHallowsHubContext = deathlyHallowsHubContext;
+        _spaceMissionHubContext = spaceMissionHubContext;
         _orderHubContext = orderHubContext;
         _dbContext = dbContext;
     }
@@ -34,16 +31,16 @@ public class HomeController : Controller
         return View();
     }
 
-    public async Task<IActionResult> DeathlyHallows(string type)
+    public async Task<IActionResult> SpaceMission(string type)
     {
-        if (SD.DeathlyHallowRace.ContainsKey(type))
-            SD.DeathlyHallowRace[type]++;
+        if (SD.SpaceMissionVoting.TryGetValue(type, out var value))
+            SD.SpaceMissionVoting[type] = ++value;
 
-        await _deathlyHallowsHubContext.Clients.All.SendAsync("updateDeathlyHallowCount",
-            SD.DeathlyHallowRace[SD.Wand],
-            SD.DeathlyHallowRace[SD.Sword],
-            SD.DeathlyHallowRace[SD.Stone],
-            SD.DeathlyHallowRace[SD.Cloak]);
+        await _spaceMissionHubContext.Clients.All.SendAsync("updateVotingCount",
+            SD.SpaceMissionVoting[SD.Apollo],
+            SD.SpaceMissionVoting[SD.Voyager],
+            SD.SpaceMissionVoting[SD.Hubble],
+            SD.SpaceMissionVoting[SD.Mars]);
 
         return Accepted();
     }
@@ -114,9 +111,7 @@ public class HomeController : Controller
         string[] name = { "Bhrugen", "Ben", "Jess", "Laura", "Ron" };
         string[] itemName = { "Food1", "Food2", "Food3", "Food4", "Food5" };
 
-        var rand = new Random();
-        // Generate a random index less than the size of the array.
-        var index = rand.Next(name.Length);
+        var index = new Random().Next(name.Length);
 
         var order = new Order
         {

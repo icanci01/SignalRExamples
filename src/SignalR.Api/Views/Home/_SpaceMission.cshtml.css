@@ -1,0 +1,12 @@
+﻿.text-bg-success {
+    background-color: #28a745;
+}
+
+.view-right {
+    text-align: right;
+}
+
+.view-right-center {
+    text-align: right;
+    vertical-align: middle;
+}

@@ -44,7 +44,7 @@ app.MapRazorPages();
 
 // SignalR Hubs
 app.MapHub<UserHub>("/hubs/userCount");
-app.MapHub<DeathlyHallowsHub>("/hubs/deathlyHallows");
+app.MapHub<VotingHub>("/hubs/voting");
 app.MapHub<SubscribeListsHub>("/hubs/subscribeLists");
 app.MapHub<NotificationsHub>("/hubs/notifications");
 app.MapHub<BasicChatHub>("/hubs/basicChat");

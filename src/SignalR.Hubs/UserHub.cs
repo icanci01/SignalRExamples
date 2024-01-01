@@ -31,7 +31,7 @@ public class UserHub : Hub
 
     public async Task NewWindowLoaded()
     {
-        var pageStatistic = await _dbContext.PageStatistics.FirstOrDefaultAsync();
+        var pageStatistic = await _dbContext.PageStatistics.Where(x => x.Id == 1).FirstOrDefaultAsync();
 
         if (pageStatistic == null)
         {

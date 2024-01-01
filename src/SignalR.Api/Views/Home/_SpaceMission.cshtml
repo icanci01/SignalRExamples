@@ -1,0 +1,27 @@
+﻿@{
+    string missionName = ViewBag.MissionName;
+    string missionIdCounter = ViewBag.MissionIdCounter;
+    string missionIdPercentage = ViewBag.MissionIdPercentage;
+    string missionIdProgress = ViewBag.MissionIdProgress;
+    string missionIdBtn = ViewBag.MissionIdBtn;
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-6">
+                <h5>@missionName</h5>
+            </div>
+            <div class="col view-right">
+                <span id="@missionIdCounter" class="badge rounded-pill text-bg-success">0 Votes</span>
+                <span id="@missionIdPercentage" class="badge rounded-pill text-bg-success">0%</span>
+            </div>
+        </div>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" id="@missionIdProgress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <div class="col-md-2 view-right d-grid pt-3 align-items-center">
+        <button id="@missionIdBtn" class="btn btn-sm btn-outline-primary">Vote for @missionName</button>
+    </div>
+</div>
