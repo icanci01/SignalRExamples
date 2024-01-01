@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using SignalR.Hubs.Common;
+using SignalR.Hubs.DTOs;
 
 namespace SignalR.Hubs;
 
 public class VotingHub : Hub
 {
-    public Dictionary<string, int> GetVotingStatus()
+    public VotingStatus GetVotingStatus()
     {
-        return SD.SpaceMissionVoting;
+        return new VotingStatus { VotingStatusDictionary = SD.SpaceMissionVoting, HasVoted = false };
     }
 }

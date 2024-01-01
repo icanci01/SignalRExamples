@@ -1,24 +1,14 @@
-﻿let apolloCounter = document.getElementById("apolloCounter");
-let swordElement = document.getElementById("voyagerCounter");
-let hubbleCounter = document.getElementById("hubbleCounter");
-let marsCounter = document.getElementById("marsCounter");
+﻿let missions = ["apollo", "voyager", "hubble", "mars"];
+let missionsCapitalized = missions.map(mission => mission.charAt(0).toUpperCase() + mission.slice(1));
 
-// Example JavaScript function to update a progress bar and counter
-function updateMissionProgress(missionId, votes, totalVotes) {
-    let percent = totalVotes > 0 ? (votes / totalVotes) * 100 : 0;
-    document.getElementById(missionId + "Progress").style.width = percent + "%";
-    document.getElementById(missionId + "Counter").textContent = votes + " Votes";
-    document.getElementById(missionId + "Percentage").textContent = percent.toFixed(2) + "%";
-}
+disableVotingButtons(missionsCapitalized);
 
-// Create connection
 let connectionVoting = new signalR.HubConnectionBuilder()
     .withAutomaticReconnect([0, 1000, 5000, null])
     .configureLogging(signalR.LogLevel.None)
     .withUrl("/hubs/voting")
     .build();
 
-// Connect to methods that hub invokes aka receive notifications from hub
 connectionVoting.on("updateVotingCount", (apollo, voyager, hubble, mars) => {
     let totalVotes = apollo + voyager + hubble + mars;
     updateMissionProgress("apollo", apollo, totalVotes);
@@ -27,28 +17,41 @@ connectionVoting.on("updateVotingCount", (apollo, voyager, hubble, mars) => {
     updateMissionProgress("mars", mars, totalVotes);
 });
 
+function fetchAndProcessVotingStatus() {
+    connectionVoting.invoke("GetVotingStatus").then((statusValue) => {
+        if (statusValue["hasVoted"]) {
+            disableVotingForSession(missionsCapitalized);
+        } else {
+            enableVotingButtons(missionsCapitalized);
+        }
+
+        const votingStatusDictionary = statusValue["votingStatusDictionary"];
+        let totalVotes = missions.reduce((total, mission) => total + votingStatusDictionary[mission], 0);
+
+        missions.forEach(mission => {
+            updateMissionProgress(mission, votingStatusDictionary[mission], totalVotes);
+        });
+    });
+}
+
 connectionVoting.onreconnecting(() => {
     setStatusReconnecting();
+    disableVotingButtons(missionsCapitalized);
 });
 
 connectionVoting.onreconnected(() => {
     setStatusConnected();
+    fetchAndProcessVotingStatus();
 });
 
 connectionVoting.onclose(() => {
     setStatusDisconnected();
+    disableVotingButtons(missionsCapitalized);
 });
 
-// Start connection
 function fulfilled() {
     setStatusConnected();
-    connectionVoting.invoke("GetVotingStatus").then((value) => {
-        let totalVotes = value["apollo"] + value["voyager"] + value["hubble"] + value["mars"];
-        updateMissionProgress("apollo", value["apollo"], totalVotes);
-        updateMissionProgress("voyager", value["voyager"], totalVotes);
-        updateMissionProgress("hubble", value["hubble"], totalVotes);
-        updateMissionProgress("mars", value["mars"], totalVotes);
-    });
+    fetchAndProcessVotingStatus();
 }
 
 function rejected() {
@@ -62,6 +65,7 @@ document.getElementById("btnApollo").addEventListener("click", function (event) 
     fetch("/Home/SpaceMission?type=apollo", {
         method: "GET"
     }).then();
+    disableVotingForSession(missionsCapitalized);
 });
 
 document.getElementById("btnVoyager").addEventListener("click", function (event) {
@@ -69,6 +73,7 @@ document.getElementById("btnVoyager").addEventListener("click", function (event)
     fetch("/Home/SpaceMission?type=voyager", {
         method: "GET"
     }).then();
+    disableVotingForSession(missionsCapitalized);
 });
 
 document.getElementById("btnHubble").addEventListener("click", function (event) {
@@ -76,6 +81,7 @@ document.getElementById("btnHubble").addEventListener("click", function (event) 
     fetch("/Home/SpaceMission?type=hubble", {
         method: "GET"
     }).then();
+    disableVotingForSession(missionsCapitalized);
 });
 
 document.getElementById("btnMars").addEventListener("click", function (event) {
@@ -83,4 +89,5 @@ document.getElementById("btnMars").addEventListener("click", function (event) {
     fetch("/Home/SpaceMission?type=mars", {
         method: "GET"
     }).then();
+    disableVotingForSession(missionsCapitalized);
 });

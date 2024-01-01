@@ -44,7 +44,13 @@
         MissionIdBtn = ViewBag.MissionIdBtn = "btnMars"
     })
     <hr/>
+    <div role="alert" class="alert alert-danger" id="alertVoted" style="display: none;">
+        You have already voted for a mission!
+    </div>
 </div>
 
-<script src="~/js/signalr.js"></script>
-<script src="~/js/voting.js"></script>
+@section Scripts {
+    <script src="~/js/signalr.js"></script>
+    <script src="~/js/voting/votingHelper.js"></script>
+    <script src="~/js/voting/voting.js"></script>
+}
