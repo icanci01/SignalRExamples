@@ -7,6 +7,9 @@
         <h2 class="display-3">Space Missions Voting</h2>
         <p class="lead">Vote for your favourite space mission!</p>
     </div>
+    <div role="alert" class="alert alert-danger" id="alertVoted" style="display: none;">
+        You have already voted for a mission!
+    </div>
     <hr/>
     @await Html.PartialAsync("_SpaceMission", new
     {
@@ -44,9 +47,6 @@
         MissionIdBtn = ViewBag.MissionIdBtn = "btnMars"
     })
     <hr/>
-    <div role="alert" class="alert alert-danger" id="alertVoted" style="display: none;">
-        You have already voted for a mission!
-    </div>
 </div>
 
 @section Scripts {
