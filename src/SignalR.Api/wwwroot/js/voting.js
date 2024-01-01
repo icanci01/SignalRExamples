@@ -3,6 +3,14 @@ let swordElement = document.getElementById("voyagerCounter");
 let hubbleCounter = document.getElementById("hubbleCounter");
 let marsCounter = document.getElementById("marsCounter");
 
+// Example JavaScript function to update a progress bar and counter
+function updateMissionProgress(missionId, votes, totalVotes) {
+    let percent = totalVotes > 0 ? (votes / totalVotes) * 100 : 0;
+    document.getElementById(missionId + "Progress").style.width = percent + "%";
+    document.getElementById(missionId + "Counter").textContent = votes + " Votes";
+    document.getElementById(missionId + "Percentage").textContent = percent.toFixed(2) + "%";
+}
+
 // Create connection
 let connectionVoting = new signalR.HubConnectionBuilder()
     .withAutomaticReconnect([0, 1000, 5000, null])
@@ -12,10 +20,11 @@ let connectionVoting = new signalR.HubConnectionBuilder()
 
 // Connect to methods that hub invokes aka receive notifications from hub
 connectionVoting.on("updateVotingCount", (apollo, voyager, hubble, mars) => {
-    apolloCounter.innerText = apollo.toString();
-    swordElement.innerText = voyager.toString();
-    hubbleCounter.innerText = hubble.toString();
-    marsCounter.innerText = mars.toString();
+    let totalVotes = apollo + voyager + hubble + mars;
+    updateMissionProgress("apollo", apollo, totalVotes);
+    updateMissionProgress("voyager", voyager, totalVotes);
+    updateMissionProgress("hubble", hubble, totalVotes);
+    updateMissionProgress("mars", mars, totalVotes);
 });
 
 connectionVoting.onreconnecting(() => {
@@ -34,10 +43,11 @@ connectionVoting.onclose(() => {
 function fulfilled() {
     setStatusConnected();
     connectionVoting.invoke("GetVotingStatus").then((value) => {
-        apolloCounter.innerText = value["apollo"].toString();
-        swordElement.innerText = value["voyager"].toString();
-        hubbleCounter.innerText = value["hubble"].toString();
-        marsCounter.innerText = value["mars"].toString();
+        let totalVotes = value["apollo"] + value["voyager"] + value["hubble"] + value["mars"];
+        updateMissionProgress("apollo", value["apollo"], totalVotes);
+        updateMissionProgress("voyager", value["voyager"], totalVotes);
+        updateMissionProgress("hubble", value["hubble"], totalVotes);
+        updateMissionProgress("mars", value["mars"], totalVotes);
     });
 }
 

@@ -2,44 +2,47 @@
     ViewData["Title"] = "Space Missions Voting";
 }
 
-<div class="container">
-    <div class="row border p-1">
-        <h3>Space Missions Voting</h3>
-        <p class="lead">
-            Vote for your favorite space mission and see the results update in real-time!
-        </p>
-        <hr/>
-        <div class="row">
-            <div>Apollo 11 - <span id="apolloCounter"></span></div>
-        </div>
-        <div class="row">
-            <div>Voyager 1 - <span id="voyagerCounter"></span></div>
-        </div>
-        <div class="row">
-            <div>Hubble Telescope - <span id="hubbleCounter"></span></div>
-        </div>
-        <div class="row">
-            <div>Mars Rover - <span id="marsCounter"></span></div>
-        </div>
-        <hr/>
-
-        @{
-            var buttonsData = new (string Id, string Text)[]
-            {
-                ("btnApollo", "Vote Apollo 11"),
-                ("btnVoyager", "Vote Voyager 1"),
-                ("btnHubble", "Vote Hubble Telescope"),
-                ("btnMars", "Vote Mars Rover")
-            };
-        }
-
-        <div style="display: flex; justify-content: space-between;" class="mb-2">
-            @foreach (var (Id, Text) in buttonsData)
-            {
-                <button id="@Id" class="btn btn-primary">@Text</button>
-            }
-        </div>
+<div class="container mt-3">
+    <div class="jumbotron">
+        <h2 class="display-3">Space Missions Voting</h2>
+        <p class="lead">Vote for your favourite space mission!</p>
     </div>
+    <hr/>
+    @await Html.PartialAsync("_SpaceMission", new
+    {
+        MissionName = ViewBag.MissionName = "Apollo 11",
+        MissionIdCounter = ViewBag.MissionIdCounter = "apolloCounter",
+        MissionIdPercentage = ViewBag.MissionIdPercentage = "apolloPercentage",
+        MissionIdProgress = ViewBag.MissionIdProgress = "apolloProgress",
+        MissionIdBtn = ViewBag.MissionIdBtn = "btnApollo"
+    })
+    <hr/>
+    @await Html.PartialAsync("_SpaceMission", new
+    {
+        MissionName = ViewBag.MissionName = "Voyager 1",
+        MissionIdCounter = ViewBag.MissionIdCounter = "voyagerCounter",
+        MissionIdPercentage = ViewBag.MissionIdPercentage = "voyagerPercentage",
+        MissionIdProgress = ViewBag.MissionIdProgress = "voyagerProgress",
+        MissionIdBtn = ViewBag.MissionIdBtn = "btnVoyager"
+    })
+    <hr/>
+    @await Html.PartialAsync("_SpaceMission", new
+    {
+        MissionName = ViewBag.MissionName = "Hubble Telescope",
+        MissionIdCounter = ViewBag.MissionIdCounter = "hubbleCounter",
+        MissionIdPercentage = ViewBag.MissionIdPercentage = "hubblePercentage",
+        MissionIdProgress = ViewBag.MissionIdProgress = "hubbleProgress",
+        MissionIdBtn = ViewBag.MissionIdBtn = "btnHubble"
+    })
+    <hr/>
+    @await Html.PartialAsync("_SpaceMission", new
+    {
+        MissionName = ViewBag.MissionName = "Mars Rover",
+        MissionIdCounter = ViewBag.MissionIdCounter = "marsCounter",
+        MissionIdPercentage = ViewBag.MissionIdPercentage = "marsPercentage",
+        MissionIdProgress = ViewBag.MissionIdProgress = "marsProgress",
+        MissionIdBtn = ViewBag.MissionIdBtn = "btnMars"
+    })
 </div>
 
 <script src="~/js/signalr.js"></script>
